@@ -96,7 +96,7 @@ namespace PLshoes_Complete.Models
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
 
                 entity.ToTable("Producto");
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PLshoes_Complete.Models
 {
     public partial class Producto
     {
-        public string ProdId { get; set; } = null!;
+        [Key]
+        public string? ProdId { get; set; }
         public string? ProdNombre { get; set; }
         public string? ProdDescripcion { get; set; }
         public float? ProdPrecio { get; set; }

@@ -20,6 +20,7 @@ namespace PLshoes_Complete.Controllers
             List<Producto> lista = PLcontext.Productos.ToList();
             return StatusCode(StatusCodes.Status200OK, lista);
         }
+
         [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] Producto request)
@@ -30,11 +31,11 @@ namespace PLshoes_Complete.Controllers
         }
 
         [HttpDelete]
-        [Route("Cerrar/{id:int}")]
-        public async Task<IActionResult> Cerrar(int id)
+        [Route("Eliminar/{id:int}")]
+        public async Task<IActionResult> Cerrar(string id)
         {
             Producto producto = PLcontext.Productos.Find(id);
-            await PLcontext.Productos.AddAsync(producto);
+            PLcontext.Productos.Remove(producto);
             await PLcontext.SaveChangesAsync();
             return StatusCode(StatusCodes.Status200OK, "Ok");
         }

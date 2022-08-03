@@ -22,3 +22,17 @@
     float: right;
     padding: 20px;
 }
+.TablaR{
+    background-color: red;
+}
+.kCmZOV {
+    position: relative;
+    width: 100%;
+    border-radius: inherit;
+    overflow-x: auto;
+    overflow-y: auto;
+    display: inline-table !important;
+    /* height: auto; */
+    max-height: 622px;
+    -webkit-overflow-scrolling: touch;
+}
