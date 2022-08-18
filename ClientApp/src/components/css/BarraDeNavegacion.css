@@ -1,0 +1,70 @@
+*{
+    --ColorTexto: #deb887;
+}
+.nav-link{
+    color: #fefef1;
+}
+.nav-link:hover{
+    color: var(--ColorTexto) !important;
+}
+.nav-itemPC{
+    display: flex;
+    text-align: center;
+}
+.nav-link{
+    background-color: #21201E;
+    display: flex !important;
+    width: 250px;
+    height: 70px;
+    margin: 0;
+    text-decoration: none;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: space-between;
+}
+.nav-link:focus{
+    /* color: var(--bs-nav-link-hover-color); */
+    color: var(--ColorTexto);
+    font-weight: 500;
+} 
+
+.active{
+    color: var(--ColorTexto) !important;
+    background-color: #1a1b13;
+    font-weight: 500;
+    border-left: 3px solid #fefef1;
+}
+
+.navBar {
+    padding: 1rem 0;
+    /* color: var(--ColorTexto); */
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.LogoText{
+    display: flex;
+    font-size: 60px;
+    font-family: 'Mrs Saint Delafield', cursive;
+    user-select: none;
+}
+
+.nav-link > svg {
+    padding-left: 50px;
+    padding-right: 10px;
+}
+@media screen and (max-width: 768px) {
+    .nav-link{
+         border: 1px solid #fff;
+         border-radius: 15px;
+         width: 80px;
+         min-height: 44px;
+         justify-content: center;
+    }
+    .nav-item{
+        width: 80px;
+        margin: 5px;
+    }
+}

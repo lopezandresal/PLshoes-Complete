@@ -20,6 +20,13 @@ namespace PLshoes_Complete.Models
         public virtual DbSet<Cliente> Clientes { get; set; } = null!;
         public virtual DbSet<Inventario> Inventarios { get; set; } = null!;
         public virtual DbSet<Producto> Productos { get; set; } = null!;
+        public virtual DbSet<Usuarios> Usuarios { get; set; } = null!;
+        public virtual DbSet<Entradas> Entradas { get; set; } = null!;
+        public virtual DbSet<Salidas> Salidas { get; set; } = null!;
+        public virtual DbSet<Ventas> Ventas { get; set; } = null!;
+        public virtual DbSet<VentasDetalle> VentasDetalle { get; set; } = null!;
+        public virtual DbSet<Creditos> Creditos { get; set; } = null!;
+        public virtual DbSet<Cuotas> Cuotas { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,22 +39,12 @@ namespace PLshoes_Complete.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Categorium>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.Property(e => e.CatId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CatNombre)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-            });
 
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
+
+                entity.ToTable("Clientes");
 
                 entity.Property(e => e.CliApellidos)
                     .HasMaxLength(50)
@@ -72,6 +69,34 @@ namespace PLshoes_Complete.Models
                 entity.Property(e => e.CliNombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Usuarios>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Usuarios");
+
+                entity.Property(e => e.UsuId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsuNombre)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsuApellido)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsuUserName)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsuPassword)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
             });
 
             modelBuilder.Entity<Inventario>(entity =>
@@ -120,6 +145,207 @@ namespace PLshoes_Complete.Models
                     .HasMaxLength(40)
                     .IsUnicode(false);
             });
+            
+            modelBuilder.Entity<Categorium>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.CatId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CatNombre)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            });
+            
+            modelBuilder.Entity<Entradas>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Entradas");
+
+                entity.Property(e => e.EntId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntFecha)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProdId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntCantidad)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.precio_compra)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+            });
+
+            modelBuilder.Entity<Salidas>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Salidas");
+
+                entity.Property(e => e.SalidId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SalidFecha)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProdId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SalidCantidad)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Precio_venta)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+            });
+
+            modelBuilder.Entity<Cuotas>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Cuotas");
+
+                entity.Property(e => e.CredId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CuotId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CuotNum)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CuotValor)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CuotEstado)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CuotFechaPago)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                
+
+            });
+
+            modelBuilder.Entity<Ventas>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Ventas");
+
+                entity.Property(e => e.VentaId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaFecha)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CliId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaTipo)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+            });
+
+            modelBuilder.Entity<VentasDetalle>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("VentasDetalle");
+
+                entity.Property(e => e.VentaId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaDtId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProdId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaCantidad)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaPrecio_u)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaDescuento)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaTotal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+
+            });
+
+            modelBuilder.Entity<Creditos>(entity =>
+            {
+                //entity.HasNoKey();
+
+                entity.ToTable("Creditos");
+
+                entity.Property(e => e.CredId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CliId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CredNumCuotas)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VentaId)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CredFecha)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CredValorTotal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CredEstado)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

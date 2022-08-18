@@ -1,0 +1,89 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+.containerLogin{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerLogin, *{
+    font-family: 'Roboto', sans-serif;
+}
+.containerSecundario{
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    /* max-width: 70%; */
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 2px 5px #000;
+}
+.form-group{
+    padding: 5px;
+}
+.btncontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.form-control:focus-visible{
+    border: 2px solid red;
+}
+.form-group > label{
+    color: #101c24;
+    font-weight: 400;
+    user-select: none;
+}
+.btnLogIn{
+    background-color: #fff;
+    width: 70%;
+    min-width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    transition: .3s;
+}
+.btnLogIn:hover{
+    background-color: #000;
+    color: #fff;
+}
+.containerTitulo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.LineaHorizontal{
+    margin: 11px auto;
+    height: 24px;
+}
+.particles-bg-canvas-self{
+    background: rgba(0, 0, 0, 0.4) url('../img/back.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-blend-mode: darken;
+}
+.containerTitulo > h1{
+    user-select: none;
+    font-weight: 600;
+    color: #101c24;
+    text-align: center;
+}
+@media screen and (min-width: 768px) {
+    .containerSecundario{
+        display: flex;
+        justify-content: center;
+        width: 25%;
+        /* max-width: 70%; */
+        padding: 25px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 1px 2px 5px #000;
+    }
+}

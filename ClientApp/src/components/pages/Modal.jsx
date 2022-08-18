@@ -1,13 +1,13 @@
-import './Modal.css';
+import '../css/Modal.css';
 
-const Modal = ({children, estado, cambiarEstado}) =>{
+const Modal = ({children, estado, titulo, cambiarEstado}) =>{
     return (
         <div>
             {estado &&
                 <div className="overlay">
                     <div className="contenedorModal">
                         <div className="encabezadoModal">
-                            <h3>Titulo!</h3>
+                            <h3>{titulo}</h3>
                         </div>
                         <button className='BotonCerrar' onClick={() => cambiarEstado(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">

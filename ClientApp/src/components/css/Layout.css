@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+.grid-contenedor > html{
+    background: #efefe2;
+}
+.grid-contenedor > body{
+    background: #efefe2;
+    color: #000;
+
+}
+.grid-contenedor{
+    /* width: 90%; */
+    max-width: 100%;
+    margin: 0;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: auto 3fr 3fr;
+    grid-template-rows: auto 3fr 3fr;
+
+    grid-template-areas: "aside header header"
+                         "aside main main"
+                         "aside main main";
+}
+.grid-contenedor > div, 
+.grid-contenedor .header, 
+.grid-contenedor .aside,
+.grid-contenedor .footer,
+.grid-contenedor .main{
+    
+    padding: 20px;
+}
+.grid-contenedor .header{
+    background: #21201E;
+    color: #fff;
+    grid-area: header;
+}
+.grid-contenedor .main{
+    /* height: 100vh; */
+    grid-area: main;
+    background: #efefe2;
+}
+.grid-contenedor .aside{
+    height: 100vh;
+    width: 250px;
+    grid-area: aside;
+    background-color: #21201E;
+    color: #fff;
+    display: flex;
+    text-align: left;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    position: fixed;
+    left: -250px;
+    transition: all .3s linear;
+}
+.ContainerElementosHeader{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.buttonUser{
+    width: 2rem !important;
+    background: none;
+    border: none;
+}
+.iconoUser{
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    
+}
+.ContainerBtnShow{
+    user-select: none;
+}
+.BtnShow{
+    background: none;
+    color: #fff;
+    border: 1px solid #fff;
+    width: 30px;
+}
+
+.activeSideBar{
+    left: 0 !important;
+    position: initial !important;
+    transition: all .5s linear;
+}
+.BtnUserDrop{
+    color: #efefe2 !important;
+    background: #1a1b13 !important;
+    border: none;
+    display: flex;
+    
+}
+.BtnUserDrop:hover{
+    background: #efefe2 !important;
+    color: #1a1b13 !important;
+}
+
+
+@media screen and (max-width: 768px) {
+    .grid-contenedor{
+        grid-template-areas: "header header header header header header"
+                             "aside aside aside aside aside aside"
+                             "main main main main main main";
+    }
+    .grid-contenedor .aside{
+        justify-content: end;
+        height: 80px;
+        background-color: #1a1b13;
+        color: #fff;
+        font-size: 1rem;
+        padding: 0;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        transition: all .5s linear;
+    }
+}

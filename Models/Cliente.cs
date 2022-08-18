@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PLshoes_Complete.Models
 {
     public partial class Cliente
     {
-        public string CliId { get; set; } = null!;
-        public string? CliCedula { get; set; }
+        [Key]
+        public int? CliId { get; set; }
+        public int? CliCedula { get; set; }
         public string? CliNombre { get; set; }
         public string? CliApellidos { get; set; }
         public int? CliCelular { get; set; }

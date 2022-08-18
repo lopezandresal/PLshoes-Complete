@@ -7,7 +7,7 @@ namespace PLshoes_Complete.Models
     public partial class Producto
     {
         [Key]
-        public string? ProdId { get; set; }
+        public int? ProdId { get; set; }
         public string? ProdNombre { get; set; }
         public string? ProdDescripcion { get; set; }
         public float? ProdPrecio { get; set; }

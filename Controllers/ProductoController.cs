@@ -30,9 +30,37 @@ namespace PLshoes_Complete.Controllers
             return StatusCode(StatusCodes.Status200OK, "Ok");
         }
 
+        [HttpPost]
+        [Route("Actualizar")]
+        public async Task<IActionResult> Actualizar([FromBody] Producto request)
+        {
+            Producto producto = PLcontext.Productos.Find(request.ProdId);
+            producto.ProdNombre = request.ProdNombre;
+            producto.CodProducto = request.CodProducto;
+            producto.ProdStock = request.ProdStock;
+            producto.CatId = request.CatId;
+            producto.ProdDescripcion = request.ProdDescripcion;
+            producto.ProdPrecio = request.ProdPrecio;
+            producto.ProdEstado = request.ProdEstado;
+            PLcontext.Productos.Update(producto);
+            await PLcontext.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status200OK, "Ok");
+        }
+
+        [HttpPost]
+        [Route("ActualizarEstado/{id:int},{status:bool}")]
+        public async Task<IActionResult> ActualizarEstado(int id, bool status)
+        {
+            Producto producto = PLcontext.Productos.Find(id);
+            producto.ProdEstado = status;
+            PLcontext.Productos.Update(producto);
+            await PLcontext.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status200OK, "Ok");
+        }
+
         [HttpDelete]
         [Route("Eliminar/{id:int}")]
-        public async Task<IActionResult> Cerrar(string id)
+        public async Task<IActionResult> Eliminar(int id)
         {
             Producto producto = PLcontext.Productos.Find(id);
             PLcontext.Productos.Remove(producto);
