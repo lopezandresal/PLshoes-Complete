@@ -1,6 +1,6 @@
 import {isMobile} from 'react-device-detect';
-import '../css/BarraDeNavegacion.css';
-import NavLink from './NavLinkNuevo';
+import '../../css/BarraDeNavegacion.css';
+import NavLink from '../Layout/NavLinkNuevo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserFriends, faList, faListCheck } from '@fortawesome/free-solid-svg-icons'
 

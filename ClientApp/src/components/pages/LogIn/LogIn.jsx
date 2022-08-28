@@ -3,7 +3,7 @@ import md5 from "md5";
 import { Component } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import '../css/LogIn.css';
+import '../../css/LogIn.css';
 import ParticlesBg from 'particles-bg'
 import { useState } from "react";
 

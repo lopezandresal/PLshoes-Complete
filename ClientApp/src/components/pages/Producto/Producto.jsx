@@ -1,20 +1,20 @@
 
-import '../css/Producto.css';
+import '../../css/Producto.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useEffect, useState } from "react";
-import Modal from './Modal';
-import InputComponent from './Input';
+import Modal from '../Layout/Modal';
+import InputComponent from '../Layout/Input';
 import MaterialTable, { MTableToolbar } from '@material-table/core';
-import Layout from './Layout';
+import Layout from '../Layout/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { ListarProductos, AgregarProductos } from './ProductosPromises';
+import GuardarProducto from './GuardarProducto'
 const Producto = () => {
-    const [productos, setProducto] = useState([]);
+    const [Data, setData] = useState([]);   //Se listan los productos 
     const [estadoModal1,setEstadoModal1] = useState(false);
     const [estadoModal2,setEstadoModal2] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [producto, setNuevoProducto] = useState(
         {
             codProducto: '',
@@ -35,17 +35,9 @@ const Producto = () => {
                 prodEstado: true,
                 catId: ''
         });
-    const [estado, setEstado] = useState(false);
-    const listarProductos = async () => {
-        const response = await fetch("api/producto/Listar")
-        if (response.status) {
-            const data = await response.json();
-            setProducto(data);
-            
-        } else {
-            console.log("Error al hacer la peticion: ", response.status);
-        }
-    }
+    const [estado, setEstado] = useState(true);
+
+    
 
     const col = [
         {
@@ -79,175 +71,78 @@ const Producto = () => {
     ]
 
     useEffect(() => {
-        setLoading(true);
-        listarProductos().then(() => {
-            setLoading(false)
-        });
+        ListarProductos().then(Data => setData(Data));
     }, [])
 
-     const guardarProducto = async (e) => {
-        e.preventDefault();
-        const response = await fetch("api/producto/Guardar", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(producto)
+    const GuardarProducto = async (e) => {
+        e.preventDefault()
+        AgregarProductos(producto).then(res => {
+            ListarProductos().then(Data => setData(Data))
         })
-        console.log(producto);
-        if (response.ok) {
-            setNuevoProducto("");
-            await listarProductos();
+        .catch(error => {
+            console.log("ERROR: ",error)
+        })
+        .finally(()=>{
             setEstadoModal1(false);
-        } else {
-            console.log("Error al hacer la peticion: ", response.status);
-        }
-     }
-
-     const ActualizarEstado = async (id, estado) => {
-        setEstado(!estado);
-        const response = await fetch("api/producto/ActualizarEstado/" + id + "," +  estado, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            // body: JSON.stringify(id, estado)
+            setNuevoProducto("");
         })
-        console.log('');
-        if (response.ok) {
-            await listarProductos();
-        } else {
-            console.log("Error al hacer la peticion: ", response.status);
-        }
-     }
+    }
 
-     const actualizarProducto = async (e) => {
-        e.preventDefault();
-        const response = await fetch("api/producto/Actualizar", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(productoEdit)
-        })
-        // console.log("informacion de productoEdit",productoEdit);
-        if (response.ok) {
-            await listarProductos();
-            setEstadoModal2(false);
-        } else {
-            console.log("Error al hacer la peticion: ", response.status);
-        }
-     }
+    //  const ActualizarEstado = async (id, estado) => {
+    //     setEstado(!estado);
+    //     const response = await fetch("api/producto/ActualizarEstado/" + id + "," +  estado, {
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'application/json;charset=utf-8'
+    //         },
+    //         // body: JSON.stringify(id, estado)
+    //     })
+    //     console.log('');
+    //     if (response.ok) {
+    //         await listarProductos();
+    //     } else {
+    //         console.log("Error al hacer la peticion: ", response.status);
+    //     }
+    //  }
 
-     const EliminarProducto = async (id) => {
-        const response = await fetch("api/producto/Eliminar/" + id, {
-            method: "DELETE"
-        })
-        console.log(producto);
-        if (response.ok) {
-            await listarProductos();
-            console.log("Se elimino el producto");
-        } else {
-            console.log("Error al hacer la peticion: ", response.status);
-        } 
+    //  const actualizarProducto = async (e) => {
+    //     e.preventDefault();
+    //     const response = await fetch("api/producto/Actualizar", {
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'application/json;charset=utf-8'
+    //         },
+    //         body: JSON.stringify(productoEdit)
+    //     })
+    //     // console.log("informacion de productoEdit",productoEdit);
+    //     if (response.ok) {
+    //         await listarProductos();
+    //         setEstadoModal2(false);
+    //     } else {
+    //         console.log("Error al hacer la peticion: ", response.status);
+    //     }
+    //  }
+
+    //  const EliminarProducto = async (id) => {
+    //     const response = await fetch("api/producto/Eliminar/" + id, {
+    //         method: "DELETE"
+    //     })
+    //     console.log(producto);
+    //     if (response.ok) {
+    //         await listarProductos();
+    //         console.log("Se elimino el producto");
+    //     } else {
+    //         console.log("Error al hacer la peticion: ", response.status);
+    //     } 
         
-     }
+    //  }
     
     return (
     <div>
-        <Layout logo='plshoes' > 
+        <Layout> 
         <div className="ProdContainer">
-            <Modal
-                estado={estadoModal1}
-                cambiarEstado={setEstadoModal1}
-                titulo='Agregar Producto'>
-                <div className='modal1'>
-                    <form className='formularioModal' onSubmit={guardarProducto}>
-
-                    <div className='inputContainer'>
-                        {/* <label>Codigo</label> */}
-                        <InputComponent
-                            namehtml='codProducto'
-                            label='Codigo'
-                            labelClassName='labelClassName'
-                            tipo='text'
-                            placeholder='Digite codigo del producto'
-                            valor={producto.codProducto}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, codProducto: e.target.value })}
-                        />
-                    </div>
-                    <div className='inputContainer'>
-                        {/* <label>Nombre</label> */}
-                        <InputComponent
-                            namehtml='prodNombre'
-                            label='Nombre'
-                            labelClassName='labelClassName'
-                            tipo='text'
-                            placeholder='Escriba el nombre del producto'
-                            valor={producto.prodNombre}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodNombre: e.target.value })}
-                        />
-                    </div>
-                        <div className='inputContainer'>
-                        {/* <label>Precio</label> */}
-                        <InputComponent
-                            namehtml='prodPrecio'
-                            label='Precio'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite precio del producto'
-                            valor={producto.prodPrecio}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodPrecio: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'>
-                        {/* <label>Stock</label> */}
-                        <InputComponent
-                            namehtml='prodStock'
-                            label='Stock'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite stock del producto'
-                            valor={producto.prodStock}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodStock: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'>
-                        {/* <label>Categoria</label> */}
-                        <InputComponent
-                            namehtml='catId'
-                            label='Categoria'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite categoria del producto'
-                            valor={producto.catId}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, catId: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'>
-                        <label htmlFor='prodDescripcion'>Descripcion</label>
-                        <textarea
-                            className='textareaComponent'
-                            id='prodDescripcion'
-                            placeholder='Escriba una descripcion del producto'
-                            value={producto.prodDescripcion}
-                            onChange={(e) => setNuevoProducto({ ...producto, prodDescripcion: e.target.value })}
-                        />
-                        </div>
-                        <div className='ContenedorEstado'>
-                            <label>
-                                <input type='checkbox' placeholder='estado del producto' defaultChecked={producto.prodEstado} onChange={(e) => setNuevoProducto({ ...producto, prodEstado: e.target.checked })} />
-                                Activar producto
-                            </label>
-                        </div>
-                        <div className='BotonesCentrados'>
-                            <button className='btn btn-info btn-sm' type='submit'> Agregar</button>
-                            <button className='btn btn-danger btn-sm' onClick={() => setEstadoModal1(false)}>Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </Modal>
-
+            {estado ? <GuardarProducto /> : console.log("no se reenderizó")}
+{/* 
             <Modal
                 estado={estadoModal2}
                 cambiarEstado={setEstadoModal2}
@@ -331,13 +226,13 @@ const Producto = () => {
                         </div>
                     </form>
                 </div>
-            </Modal>
+            </Modal> */}
 
             <MaterialTable
                 columns={col}
-                data={productos}
+                data={Data}
                 title='Productos'
-                isLoading={loading}
+                // isLoading={props.loading}
                 
                 components={{
                     Action: props => (
@@ -355,12 +250,12 @@ const Producto = () => {
                                 </svg>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => {
+                                {/* <Dropdown.Item onClick={() => {
                                     setProductoEdit(props.data)
                                     setEstadoModal2(!estadoModal2)
                                 }}>Editar</Dropdown.Item>
                                 <Dropdown.Item onClick={() => ActualizarEstado(props.data.prodId, estado)}>Desactivar</Dropdown.Item>
-                                <Dropdown.Item onClick={() => EliminarProducto(props.data.prodId)}>Eliminar</Dropdown.Item>
+                                <Dropdown.Item onClick={() => EliminarProducto(props.data.prodId)}>Eliminar</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
                     ),

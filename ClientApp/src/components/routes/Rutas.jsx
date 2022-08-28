@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import Producto from "../pages/Producto";
-import Error404 from "../pages/Error404";
-import LogIn from "../pages/LogIn";
-import Inicio from "../pages/Inicio";
-import Clientes from "../pages/Clientes";
+import Producto from "../pages/Producto/Producto";
+import Error404 from "../pages/Error404/Error404";
+import LogIn from "../pages/LogIn/LogIn";
+import Inicio from "../pages/Home/Inicio";
+import Clientes from "../pages/Clientes/Clientes";
 
 const Rutas = () =>{
     return ( 

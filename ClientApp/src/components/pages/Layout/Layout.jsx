@@ -1,4 +1,4 @@
-import '../css/Layout.css';
+import '../../css/Layout.css';
 import BarraNavegacion from './BarraDeNavegacion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'

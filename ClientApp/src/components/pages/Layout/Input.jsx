@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import '../css/Producto.css';
+import '../../css/Producto.css';
 
 export default function InputComponent({namehtml, label, tipo, placeholder, valor, AsignarValor, labelClassName}) {
     return (

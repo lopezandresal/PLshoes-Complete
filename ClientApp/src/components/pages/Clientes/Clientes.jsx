@@ -2,10 +2,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useEffect, useState } from "react";
-import Modal from './Modal';
-import InputComponent from './Input';
+import Modal from '../Layout/Modal';
+import InputComponent from '../Layout/Input';
 import MaterialTable, { MTableToolbar } from '@material-table/core';
-import Layout from './Layout';
+import Layout from '../Layout/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 

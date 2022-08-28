@@ -1,4 +1,4 @@
-import '../css/BarraDeNavegacion.css';
+import '../../css/BarraDeNavegacion.css';
 import { NavLink as NavLinkNuevo } from "react-router-dom";
 
 const NavLink = ({to, children, ...props}) => {
