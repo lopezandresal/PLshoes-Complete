@@ -1,58 +1,48 @@
 import InputComponent from '../Layout/Input';
-import {  AgregarProductos } from './ProductosPromises';
+import {  ActualizarProductos } from './ProductosPromises';
 import { useState } from "react";
 
 
-const GuardarProductoModulo = ({children}) =>{
+const ActualizarProductoModulo = ({children, productoInfo}) =>{
+    const [productoEdit, setProductoEdit] = useState(productoInfo);
 
-    const [producto, setNuevoProducto] = useState(
-        {
-            codProducto: '',
-            prodNombre: '',
-            prodDescripcion: '',
-            prodPrecio: '',
-            prodStock: '',
-            prodEstado: true,
-            catId: ''
-        });
 
-    const GuardarProducto = async (e) => {
-            e.preventDefault()
-            AgregarProductos(producto).then(res => {
-                console.log(res)
-            })
-            .catch(error => {
-                console.log("ERROR: ",error)
-            })
-            .finally(()=>{
-                // setEstadoModal1(false);
-                setNuevoProducto("");
-            })
-        }
+    const actualizarProducto = async (e) => {
+        e.preventDefault();
+        ActualizarProductos(productoEdit).then(res => {
+            console.log(res)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+        .finally(() => {
+            setProductoEdit('')
+        })
+     }
     return (
-                <form className='formularioModal' onSubmit={GuardarProducto}>
+        <form className='formularioModal' onSubmit={actualizarProducto}>
                     <div className='inputContainer'>
                         <InputComponent
-                            namehtml='codProducto'
+                            namehtml='CodProducto'
                             label='Codigo'
                             labelClassName='labelClassName'
                             tipo='text'
                             placeholder='Digite codigo del producto'
-                            valor={producto.codProducto}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, codProducto: e.target.value })}
+                            valor={productoEdit.codProducto}
+                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, codProducto: e.target.value })}
                         />
                     </div>
-                    <div className='inputContainer'>
+                        <div className='inputContainer'>
                         <InputComponent
-                            namehtml='prodNombre'
+                            namehtml='prodName'
                             label='Nombre'
                             labelClassName='labelClassName'
                             tipo='text'
                             placeholder='Escriba el nombre del producto'
-                            valor={producto.prodNombre}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodNombre: e.target.value })}
+                            valor={productoEdit.prodNombre}
+                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodNombre: e.target.value })}
                         />
-                    </div>
+                        </div>
                         <div className='inputContainer'>
                         <InputComponent
                             namehtml='prodPrecio'
@@ -60,8 +50,8 @@ const GuardarProductoModulo = ({children}) =>{
                             labelClassName='labelClassName'
                             tipo='number'
                             placeholder='Digite precio del producto'
-                            valor={producto.prodPrecio}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodPrecio: e.target.value })}
+                            valor={productoEdit.prodPrecio}
+                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodPrecio: e.target.value })}
                         />
                         </div>
                         <div className='inputContainer'>
@@ -71,42 +61,42 @@ const GuardarProductoModulo = ({children}) =>{
                             labelClassName='labelClassName'
                             tipo='number'
                             placeholder='Digite stock del producto'
-                            valor={producto.prodStock}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, prodStock: e.target.value })}
+                            valor={productoEdit.prodStock}
+                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodStock: e.target.value })}
                         />
                         </div>
-                        <div className='inputContainer'>
+                        <div className='inputContainer'> 
                         <InputComponent
                             namehtml='catId'
                             label='Categoria'
                             labelClassName='labelClassName'
                             tipo='number'
                             placeholder='Digite categoria del producto'
-                            valor={producto.catId}
-                            AsignarValor={(e) => setNuevoProducto({ ...producto, catId: e.target.value })}
+                            valor={productoEdit.catId}
+                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, catId: e.target.value })}
                         />
                         </div>
-                        <div className='inputContainer'>
+                        <div className='inputContainer'> 
                         <label htmlFor='prodDescripcion'>Descripcion</label>
                         <textarea
                             className='textareaComponent'
                             id='prodDescripcion'
                             placeholder='Escriba una descripcion del producto'
-                            value={producto.prodDescripcion}
-                            onChange={(e) => setNuevoProducto({ ...producto, prodDescripcion: e.target.value })}
+                            value={productoEdit.prodDescripcion}
+                            onChange={(e) => setProductoEdit({ ...productoEdit, prodDescripcion: e.target.value })}
                         />
                         </div>
                         <div className='ContenedorEstado'>
                             <label>
-                                <input type='checkbox' defaultChecked={producto.prodEstado} onChange={(e) => setNuevoProducto({ ...producto, prodEstado: e.target.checked })} />
+                                <input type='checkbox' placeholder='estado del producto' defaultChecked={productoEdit.prodEstado} onChange={(e) => setProductoEdit({ ...productoEdit, prodEstado: e.target.checked })} />
                                 Activar producto
                             </label>
                         </div>
                         <div className='BotonesCentrados'>
-                            <button className='btn btn-info btn-sm' type='submit'> Agregar</button>
+                            <button className='btn btn-info btn-sm' type='submit' > Confirmar</button>
                             {children}
                         </div>
                     </form>
     )
 }
-export default GuardarProductoModulo;
+export default ActualizarProductoModulo;

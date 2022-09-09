@@ -1,3 +1,4 @@
 
 export const getListProductsURL = "api/producto/Listar";
-export const PostProductsURL = "api/producto/Guardar";
+export const PostSaveProductsURL = "api/producto/Guardar";
+export const PostUpdateProductsURL = "api/producto/Actualizar";

@@ -4,39 +4,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useEffect, useState } from "react";
 import Modal from '../Layout/Modal';
-import InputComponent from '../Layout/Input';
 import MaterialTable, { MTableToolbar } from '@material-table/core';
 import Layout from '../Layout/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ListarProductos, AgregarProductos } from './ProductosPromises';
-import GuardarProducto from './GuardarProducto'
+import { useModal } from '../Layout/useModal';
+import GuardarProductoModulo from './GuardarProducto'
+import ActualizarProductoModulo from './ActualizarProducto'
+
 const Producto = () => {
     const [Data, setData] = useState([]);   //Se listan los productos 
-    const [estadoModal1,setEstadoModal1] = useState(false);
-    const [estadoModal2,setEstadoModal2] = useState(false);
-    const [producto, setNuevoProducto] = useState(
-        {
-            codProducto: '',
-            prodNombre: '',
-            prodDescripcion: '',
-            prodPrecio: '',
-            prodStock: '',
-            prodEstado: true,
-            catId: ''
-        });
-    const [productoEdit, setProductoEdit] = useState(
-        {
-                codProducto: '',
-                prodNombre: '',
-                prodDescripcion: '',
-                prodPrecio: '',
-                prodStock: '',
-                prodEstado: true,
-                catId: ''
-        });
+    const [isOpenModal1, openModal1, closeModal1] = useModal(false)
+    const [isOpenModal2, openModal2, closeModal2] = useModal(false)
+    const [productoEdit, setProductoEdit] = useState({});
     const [estado, setEstado] = useState(true);
-
     
 
     const col = [
@@ -74,20 +56,6 @@ const Producto = () => {
         ListarProductos().then(Data => setData(Data));
     }, [])
 
-    const GuardarProducto = async (e) => {
-        e.preventDefault()
-        AgregarProductos(producto).then(res => {
-            ListarProductos().then(Data => setData(Data))
-        })
-        .catch(error => {
-            console.log("ERROR: ",error)
-        })
-        .finally(()=>{
-            setEstadoModal1(false);
-            setNuevoProducto("");
-        })
-    }
-
     //  const ActualizarEstado = async (id, estado) => {
     //     setEstado(!estado);
     //     const response = await fetch("api/producto/ActualizarEstado/" + id + "," +  estado, {
@@ -100,24 +68,6 @@ const Producto = () => {
     //     console.log('');
     //     if (response.ok) {
     //         await listarProductos();
-    //     } else {
-    //         console.log("Error al hacer la peticion: ", response.status);
-    //     }
-    //  }
-
-    //  const actualizarProducto = async (e) => {
-    //     e.preventDefault();
-    //     const response = await fetch("api/producto/Actualizar", {
-    //         method: "POST",
-    //         headers: {
-    //             'Content-Type': 'application/json;charset=utf-8'
-    //         },
-    //         body: JSON.stringify(productoEdit)
-    //     })
-    //     // console.log("informacion de productoEdit",productoEdit);
-    //     if (response.ok) {
-    //         await listarProductos();
-    //         setEstadoModal2(false);
     //     } else {
     //         console.log("Error al hacer la peticion: ", response.status);
     //     }
@@ -141,92 +91,18 @@ const Producto = () => {
     <div>
         <Layout> 
         <div className="ProdContainer">
-            {estado ? <GuardarProducto /> : console.log("no se reenderizó")}
-{/* 
             <Modal
-                estado={estadoModal2}
-                cambiarEstado={setEstadoModal2}
+                isOpen={isOpenModal1}
+                closeModal={closeModal1}
+                titulo='Agregar Producto'>
+                {isOpenModal1 ? <GuardarProductoModulo children={<button className='btn btn-danger btn-sm' onClick={closeModal1}>Cancelar</button>} /> : ''}
+            </Modal>
+            <Modal
+                isOpen={isOpenModal2}
+                closeModal={closeModal2}
                 titulo='Modificar Producto'>
-                <div className='modal1'>
-                    <form className='formularioModal' onSubmit={actualizarProducto}>
-                    <div className='inputContainer'>
-                        <InputComponent
-                            namehtml='CodProducto'
-                            label='Codigo'
-                            labelClassName='labelClassName'
-                            tipo='text'
-                            placeholder='Digite codigo del producto'
-                            valor={productoEdit.codProducto}
-                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, codProducto: e.target.value })}
-                        />
-                    </div>
-                        <div className='inputContainer'>
-                        <InputComponent
-                            namehtml='prodName'
-                            label='Nombre'
-                            labelClassName='labelClassName'
-                            tipo='text'
-                            placeholder='Escriba el nombre del producto'
-                            valor={productoEdit.prodNombre}
-                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodNombre: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'>
-                        <InputComponent
-                            namehtml='prodPrecio'
-                            label='Precio'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite precio del producto'
-                            valor={productoEdit.prodPrecio}
-                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodPrecio: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'>
-                        <InputComponent
-                            namehtml='prodStock'
-                            label='Stock'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite stock del producto'
-                            valor={productoEdit.prodStock}
-                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, prodStock: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'> 
-                        <InputComponent
-                            namehtml='catId'
-                            label='Categoria'
-                            labelClassName='labelClassName'
-                            tipo='number'
-                            placeholder='Digite categoria del producto'
-                            valor={productoEdit.catId}
-                            AsignarValor={(e) => setProductoEdit({ ...productoEdit, catId: e.target.value })}
-                        />
-                        </div>
-                        <div className='inputContainer'> 
-                        <label htmlFor='prodDescripcion'>Descripcion</label>
-                        <textarea
-                            className='textareaComponent'
-                            id='prodDescripcion'
-                            placeholder='Escriba una descripcion del producto'
-                            value={productoEdit.prodDescripcion}
-                            onChange={(e) => setProductoEdit({ ...productoEdit, prodDescripcion: e.target.value })}
-                        />
-                        </div>
-                        <div className='ContenedorEstado'>
-                            <label>
-                                <input type='checkbox' placeholder='estado del producto' defaultChecked={productoEdit.prodEstado} onChange={(e) => setProductoEdit({ ...productoEdit, prodEstado: e.target.checked })} />
-                                Activar producto
-                            </label>
-                        </div>
-                        <div className='BotonesCentrados'>
-                            <button className='btn btn-info btn-sm' type='submit' > Confirmar</button>
-                            <button className='btn btn-danger btn-sm' onClick={() => setEstadoModal2(false)}>Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </Modal> */}
+                {isOpenModal2 ? <ActualizarProductoModulo productoInfo={productoEdit} children={<button className='btn btn-danger btn-sm' onClick={closeModal2}>Cancelar</button>} /> : ''}
+            </Modal>
 
             <MaterialTable
                 columns={col}
@@ -250,18 +126,16 @@ const Producto = () => {
                                 </svg>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                {/* <Dropdown.Item onClick={() => {
-                                    setProductoEdit(props.data)
-                                    setEstadoModal2(!estadoModal2)
-                                }}>Editar</Dropdown.Item>
-                                <Dropdown.Item onClick={() => ActualizarEstado(props.data.prodId, estado)}>Desactivar</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {setProductoEdit(props.data) 
+                                    openModal2()}}>Editar</Dropdown.Item>
+                                {/* <Dropdown.Item onClick={() => ActualizarEstado(props.data.prodId, estado)}>Desactivar</Dropdown.Item>
                                 <Dropdown.Item onClick={() => EliminarProducto(props.data.prodId)}>Eliminar</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
                     ),
                     Toolbar: props => (
                         <div className='ContainerBtnAddProd'><MTableToolbar {...props} />
-                            <button className='btnAddProd' onClick={() => setEstadoModal1(!estadoModal1)}><FontAwesomeIcon icon={faPlus} className='' /></button>
+                            <button className='btnAddProd' onClick={openModal1}><FontAwesomeIcon icon={faPlus} className='' /></button>
                         </div>
 
                     )
